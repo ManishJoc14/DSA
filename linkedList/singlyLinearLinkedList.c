@@ -5,104 +5,125 @@ typedef struct singlyLinkedList
 {
     int info;
     struct singlyLinkedList *next;
-} List;
+} Node;
 
-List *start = NULL;
+Node *start = NULL;
 
-List *initializeList()
+Node *initializeNode()
 {
-    List *l = (List *)malloc(sizeof(List));
-    if (l == NULL)
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    if (newNode == NULL)
     {
-        printf("\nMemory allocation failed for list.");
+        printf("\nMemory allocation failed for Node.\n");
         exit(1);
     }
-    l->info = 0;
-    l->next = NULL;
-    return l;
+    newNode->info = 0;
+    newNode->next = NULL;
+    return newNode;
 }
 
 void insertAtBegining(int value)
 {
-    List *l = initializeList();
+    Node *newNode = initializeNode();
 
-    l->info = value;
+    newNode->info = value;
 
     if (start != NULL)
     {
-        l->next = start;
+        newNode->next = start;
     }
-    start = l;
+    start = newNode;
 }
 
 void display()
 {
-    List *temp = start;
-    printf("\nElements of list are: ");
+    Node *temp = start;
+    printf("\nElements of Node are: ");
 
     while (temp != NULL)
     {
-        printf("%d ", temp->info);
+        printf("%d->", temp->info);
         temp = temp->next;
     }
+    printf("NULL");
+    printf("\n");
 }
 
 void search(int value)
 {
-    List *temp = start;
+    Node *temp = start;
     int index = 0;
     do
     {
         if (temp->info == value)
         {
-            printf("\n%d is found at index %d", value, index);
+            printf("\n%d is found at index %d\n", value, index);
             return;
         }
 
         temp = temp->next;
         index++;
     } while (temp != NULL);
-    printf("\n%d does not exist in the list.");
+    printf("\n%d does not exist in the Node.\n");
 }
 void deleteLastNode()
 {
-    List *secondLast, *last = start;
-
     if (start == NULL)
     {
-        printf("\nList is empty!!");
+        printf("\nNode is empty!!\n");
         return;
     }
-    else if (start->next == NULL)
+
+    if (start->next == NULL)
     {
-        printf("\nDeleted element is %d", start->info);
+        printf("\nDeleted element is %d\n", start->info);
         start = NULL;
     }
     else
     {
-        while (last->next != NULL)
+        Node *temp = start;
+        while (temp->next->next != NULL)
         {
-            secondLast = last;
-            last = last->next;
-        };
-        secondLast->next = NULL;
-        printf("\nDeleted element is %d", last->info);
-        free(last);
+            temp = temp->next;
+        }
+        printf("\nDeleted element is %d\n", temp->next->info);
+        free(temp->next);
+        temp->next = NULL;
     }
 }
 int main()
 {
-    insertAtBegining(10);
-    insertAtBegining(20);
-    insertAtBegining(30);
-    insertAtBegining(40);
-    display();
+    int choice;
+    int value;
+restart:
+    printf("\n1.Insert at begining  2.Display all  3.Search for node  4.Delete last node.  5.Exit");
+    printf("\nEnter your choice:");
+    scanf("%d", &choice);
 
-    search(20);
-    search(40);
-    deleteLastNode();
-    deleteLastNode();
-    display();
+    switch (choice)
+    {
+    case 1:
+        printf("Enter value to insert: ");
+        scanf("%d", &value);
+        insertAtBegining(value);
+        break;
+    case 2:
+        display();
+        break;
+    case 3:
+        printf("Enter value to search: ");
+        scanf("%d", &value);
+        search(value);
+        break;
+    case 4:
+        deleteLastNode();
+        break;
+    case 5:
+        return 0;
+    default:
+        printf("Invalid choice! Please try again.");
+    }
+    goto restart;
 
     return 0;
 }
