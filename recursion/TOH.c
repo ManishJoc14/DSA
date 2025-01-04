@@ -1,27 +1,19 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-void TOH(int n, char L, char C, char R)
+void TOH(int n, char from, char to, char aux)
 {
-
-    if (n == 1)
+    if (n > 0)
     {
-        printf("Move disk 1 from %c to %c\n", L, R);
-        return;
+        TOH(n - 1, from, aux, to);
+        printf("\n Move disk %d from %c to %c", n, from, to);
+        TOH(n - 1, aux, to, from);
     }
-
-    TOH(n - 1, L, R, C);
-
-    printf("move disk %d from %c to %c\n", n, L, R);
-
-    TOH(n - 1, R, C, L);
 }
 
 int main()
 {
-
     int n = 3;
-    TOH(n, 'L', 'C', 'R');
+    TOH(n, 'A', 'B', 'C');
 
     return 0;
 }
