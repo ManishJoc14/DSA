@@ -13,7 +13,7 @@ void TOH(int n, char from, char to, char aux)
 int main()
 {
     int n = 3;
-    TOH(n, 'A', 'B', 'C');
+    TOH(n, 'L', 'R', 'C');
 
     return 0;
 }
