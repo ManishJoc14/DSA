@@ -136,30 +136,49 @@ Node *deleteNode(Node *root, int val)
 
 int main()
 {
+    int choice;
     Node *root = NULL;
-    root = insertValue(root, 5);
-    root = insertValue(root, 10);
-    root = insertValue(root, 11);
-    root = insertValue(root, 7);
-    root = insertValue(root, 6);
-    root = insertValue(root, 15);
 
-    printf("Inorder  : ");
-    inOrderTraversal(root);
-    printf("\n");
+    do
+    {
+        printf("\n1. Insert  2. Delete  3. Inorder  4. Preorder  5. Postorder");
+        printf("\nPlease choose: ");
+        scanf("%d", &choice);
 
-    printf("Postorder: ");
-    postOrderTraversal(root);
-    printf("\n");
-
-    printf("Preorder : ");
-    preOrderTraversal(root);
-    printf("\n");
-
-    root = deleteNode(root, 10);
-    printf("Inorder  : ");
-    inOrderTraversal(root);
-    printf("\n");
+        switch (choice)
+        {
+        case 1:
+            int val;
+            printf("Enter value: ");
+            scanf("%d", &val);
+            root = insertValue(root, val);
+            break;
+        case 2:
+            int del_val;
+            printf("Enter value to delete: ");
+            scanf("%d", &del_val);
+            root = deleteNode(root, del_val);
+            break;
+        case 3:
+            printf("Inorder  : ");
+            inOrderTraversal(root);
+            printf("\n");
+            break;
+        case 4:
+            printf("Preorder : ");
+            preOrderTraversal(root);
+            printf("\n");
+            break;
+        case 5:
+            printf("Postorder: ");
+            postOrderTraversal(root);
+            printf("\n");
+            break;
+        default:
+            printf("Wrong choice!!");
+            break;
+        }
+    } while (choice == 1 || choice == 2 || choice == 3);
 
     return 0;
 }
