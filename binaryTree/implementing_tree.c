@@ -98,6 +98,12 @@ Node *deleteNode(Node *root, int val)
 
     if (root->val == val)
     {
+        // leaf Node
+        if (root->left == NULL && root->right == NULL)
+        {
+            free(root);
+            return NULL;
+        }
 
         // One child Node
         if (root->left == NULL)
@@ -115,6 +121,7 @@ Node *deleteNode(Node *root, int val)
             return temp;
         }
 
+        // Two child Node
         Node *succ = getSuccessor(root->right);
         root->val = succ->val;
         root->right = deleteNode(root->right, succ->val);
@@ -138,23 +145,23 @@ int main()
 {
     int choice;
     Node *root = NULL;
+    int del_val;
+    int val;
 
     do
     {
-        printf("\n1. Insert  2. Delete  3. Inorder  4. Preorder  5. Postorder");
+        printf("\n1. Insert  2. Delete  3. Inorder  4. Preorder  5. Postorder 6.Exit");
         printf("\nPlease choose: ");
         scanf("%d", &choice);
 
         switch (choice)
         {
         case 1:
-            int val;
             printf("Enter value: ");
             scanf("%d", &val);
             root = insertValue(root, val);
             break;
         case 2:
-            int del_val;
             printf("Enter value to delete: ");
             scanf("%d", &del_val);
             root = deleteNode(root, del_val);
@@ -174,11 +181,13 @@ int main()
             postOrderTraversal(root);
             printf("\n");
             break;
+        case 6:
+            return 0;
         default:
             printf("Wrong choice!!");
             break;
         }
-    } while (choice == 1 || choice == 2 || choice == 3);
+    } while (choice >= 1 && choice <= 6);
 
     return 0;
 }
