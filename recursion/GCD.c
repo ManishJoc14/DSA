@@ -1,19 +1,27 @@
 #include <stdio.h>
-int hcf(int n1, int n2);
+int hcf(int a, int b);
 
 int main()
 {
-    int n1, n2;
+    int a, b;
     printf("Enter two positive integers: ");
-    scanf("%d %d", &n1, &n2);
-    printf("G.C.D of %d and %d is %d.", n1, n2, hcf(n1, n2));
+    scanf("%d %d", &a, &b);
+    printf("G.C.D of %d and %d is %d.", a, b, hcf(a, b));
     return 0;
 }
 
-int hcf(int n1, int n2)
+int hcf(int a, int b)
 {
-    if (n2 != 0)
-        return hcf(n2, n1 % n2);
+    if (b != 0)
+        return hcf(b, a % b);
     else
-        return n1;
+        return a;
+}
+
+int lcm(int a, int b)
+{
+    if (a == 0 || b == 0)
+        return 0;
+    else
+        return (a * b) / hcf(a, b);
 }
