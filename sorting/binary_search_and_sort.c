@@ -42,7 +42,10 @@ int main()
 {
     int arr[] = {64, 34, 25, 12, 22, 11, 90};
     int size = sizeof(arr) / sizeof(arr[0]);
-    int target = 25;
+    int target;
+
+    printf("Enter target: ");
+    scanf("%d", &target);
 
     // Sort the array
     bubbleSort(arr, size);
@@ -50,10 +53,16 @@ int main()
     // Perform binary search
     int result = binarySearch(arr, size, target);
 
+    printf("Given elements: ");
+    for (int i = 0; i < size; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+
     if (result != -1)
-        printf("Element found at index %d\n", result);
+        printf("\n%d found at index %d\n", target, result);
     else
-        printf("Element not found\n");
+        printf("\n%d not found\n", target);
 
     return 0;
 }
