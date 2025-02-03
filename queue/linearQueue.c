@@ -3,7 +3,7 @@
 
 typedef struct LinearQueue
 {
-    int head, tail, size, *values;
+    int front, rear, size, *values;
 } Queue;
 
 Queue *initializeQueue(int size)
@@ -14,8 +14,8 @@ Queue *initializeQueue(int size)
         printf("Memory allocation failed for queue.\n");
         exit(1);
     }
-    q->head = 0;
-    q->tail = -1;
+    q->front = 0;
+    q->rear = -1;
     q->size = size;
     q->values = (int *)malloc(sizeof(int) * size);
     if (q->values == NULL)
@@ -29,43 +29,43 @@ Queue *initializeQueue(int size)
 
 void enqueue(Queue *q, int value)
 {
-    if (q->tail >= q->size - 1)
+    if (q->rear >= q->size - 1)
     {
         printf("Queue is full.\n");
     }
     else
     {
-        q->values[++q->tail] = value;
+        q->values[++q->rear] = value;
     }
 }
 
 int dequeue(Queue *q)
 {
-    if (q->head > q->tail)
+    if (q->front > q->rear)
     {
         printf("Queue is empty.\n");
         return -1;
     }
     else
     {
-        return q->values[q->head++];
+        return q->values[q->front++];
     }
 }
 
 void displayAll(Queue *q)
 {
-    if (q->head > q->tail)
+    if (q->front > q->rear)
     {
         printf("Queue is empty.\n");
         return;
     }
 
     printf("\nElements of queue are: ");
-    int index = q->head;
+    int i = q->front;
 
-    while (index <= q->tail)
+    while (i <= q->rear)
     {
-        printf("%d ", q->values[index++]);
+        printf("%d ", q->values[i++]);
     }
 }
 int main()

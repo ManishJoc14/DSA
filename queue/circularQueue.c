@@ -3,7 +3,7 @@
 
 typedef struct CircularQueue
 {
-    int head, tail, size, *values;
+    int front, rear, size, *values;
 } Queue;
 
 Queue *initializeQueue(int size)
@@ -14,8 +14,8 @@ Queue *initializeQueue(int size)
         printf("Memory allocation failed for queue.\n");
         exit(1);
     }
-    q->head = 0;
-    q->tail = 0;
+    q->front = 0;
+    q->rear = 0;
     q->size = size + 1;
     q->values = (int *)malloc(sizeof(int) * size);
     if (q->values == NULL)
@@ -29,48 +29,50 @@ Queue *initializeQueue(int size)
 
 void enqueue(Queue *q, int value)
 {
-    if (q->head == (q->tail + 1) % q->size)
+    if (q->front == (q->rear + 1) % q->size)
     {
         printf("Queue is full.\n");
     }
     else
     {
-        q->values[q->tail] = value;
-        q->tail = (q->tail + 1) % q->size;
+        q->values[q->rear] = value;
+        q->rear = (q->rear + 1) % q->size;
+
+        printf("Front = %d \t Rear = %d\n", q->front, q->rear);
     }
 }
 
 int dequeue(Queue *q)
 {
-    if (q->head == q->tail)
+    if (q->front == q->rear)
     {
         printf("Queue is empty.\n");
         return -1;
     }
     else
     {
-        int item = q->values[q->head];
-        q->head = (q->head + 1) % q->size;
+        int item = q->values[q->front];
+        q->front = (q->front + 1) % q->size;
         return item;
     }
 }
 
 void displayAll(Queue *q)
 {
-    if (q->head == q->tail)
+    if (q->front == q->rear)
     {
         printf("Queue is empty.\n");
         return;
     }
 
     printf("\nElements of queue are: ");
-    int index = q->head;
 
-    do
+    int i = q->front;
+    while (i < q->rear)
     {
-        printf("%d ", q->values[index]);
-        index = (index + 1) % q->size;
-    } while (index != q->tail);
+        printf("%d ", q->values[i]);
+        i = (i + 1) % q->size;
+    }
 }
 
 int main()
@@ -79,7 +81,7 @@ int main()
     Queue *q = initializeQueue(size);
 
 restart:
-   printf("\n1. Enqueue  ");
+    printf("\n1. Enqueue  ");
     printf("2. Dequeue  ");
     printf("3. DisplayALl  ");
     printf("4. Exit\n");

@@ -47,21 +47,21 @@ void insertAtBegining(int value)
 void display()
 {
     Node *temp = start;
-    printf("\nElements of Node are: ");
     if (start == NULL)
     {
         printf("\nList is empty!!\n");
         return;
     }
 
+    printf("\nElements of Node are: ");
     while (1)
     {
-        printf("%d->", start->info);
-        start = start->next;
-        if (start == last->next)
+        printf("%d->", temp->info);
+        temp = temp->next;
+        if (temp == last->next)
             break;
     }
-    printf("START(%d)", start->info);
+    printf("START(%d)", last->next->info);
     printf("\n");
 }
 
@@ -94,6 +94,7 @@ void deleteLastNode()
     {
         printf("\nDeleted element is %d", start->info);
         free(last);
+        free(start);
         start = NULL;
         last = NULL;
     }
@@ -104,6 +105,7 @@ void deleteLastNode()
         {
             ptr = ptr->next;
         };
+        // ptr is secondlast so, ptr->next is last
         ptr->next = start;
         printf("\nDeleted element is %d", last->info);
         free(last);
